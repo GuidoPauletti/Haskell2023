@@ -1,8 +1,8 @@
 module Solucion where
+
 -- Completar con los datos del grupo
---
 -- Nombre de Grupo: sintaxError
--- Integrante 1: Nombre Apellido, email, LU
+-- Integrante 1: Weicong Wu, eric5vcwwc@gmail.com, 460/23
 -- Integrante 2: Nombre Apellido, email, LU
 -- Integrante 3: Nombre Apellido, email, LU
 -- Integrante 4: Nombre Apellido, email, LU
@@ -68,13 +68,10 @@ cantidadDeAmigos red usuario = longitud (amigosDe red usuario)
 
 -- Ejercicio 4
 -- Función principal para encontrar el usuario con más amigos
--- Función principal para encontrar el usuario con más amigos
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos red = usuarioConMasAmigosAux red (usuarios red)
 
 -- Función auxiliar que compara recursivamente los usuarios para encontrar el que tiene más amigos
--- Si solo queda un usuario en la lista, devolvemos ese usuario
--- Si hay más de un usuario en la lista, comparamos el primero con el que tiene más amigos en el resto de la lista
 usuarioConMasAmigosAux :: RedSocial -> [Usuario] -> Usuario
 usuarioConMasAmigosAux _ [u] = u
 usuarioConMasAmigosAux red (u:us)
@@ -82,7 +79,7 @@ usuarioConMasAmigosAux red (u:us)
   | otherwise = usuarioConMasAmigosResto
   where usuarioConMasAmigosResto = usuarioConMasAmigosAux red us
     
-
+    
 -- Ejercicio 5
 -- Evalua si existe usuario con 10+ amigos, solo lo comprueba con el usuario de mas amigos
 estaRobertoCarlos :: RedSocial -> Bool
@@ -129,13 +126,11 @@ lesGustanLasMismasPublicaciones r u1 u2 = publicacionesQueLeGustanA r u1 == publ
 
 
 --Ejercicio 9
+-- La función tieneUnSeguidorFiel verifica si un usuario tiene al menos un seguidor fiel en la red social.
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel red usuario = seguidorFielAux red usuario (usuarios red)
 
--- En cada paso de la recursión, se examina un usuario de la lista. 
--- Si el usuario es diferente al usuario de entrada y le gustan todas las publicaciones del usuario de entrada, entonces tenemos un seguidor fiel. La función devuelve True en este caso.
--- Si el usuario no cumple con estas condiciones, se continúa con la recursión, pasando al siguiente usuario de la lista.
--- Si se llega al final de la lista sin encontrar un seguidor fiel, la función devuelve False.
+-- Recorre la lista de usuarios y verifica si alguno de ellos le gusta todas las publicaciones del usuario dado.
 seguidorFielAux :: RedSocial -> Usuario -> [Usuario] -> Bool
 seguidorFielAux _ _ [] = False
 seguidorFielAux red usuario (x:xs)
@@ -144,18 +139,12 @@ seguidorFielAux red usuario (x:xs)
 
 
 -- Ejercicio 10
--- describir qué hace la función: 
-
 -- Esta función verifica si existe una secuencia de amigos entre dos usuarios en la red social. 
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red u1 u2 = existeSecuenciaDeAmigosAux red u1 u2 []
 
--- Se llama a la función auxiliar existeSecuenciaDeAmigosAux pasando la red social, el primer usuario, el segundo usuario y una lista de usuarios visitados (inicialmente vacía).
--- Si el primer usuario es igual al segundo usuario, significa que se ha encontrado una secuencia de amigos, por lo que la función devuelve True.
--- Si el primer usuario ya ha sido visitado anteriormente (se encuentra en la lista de visitados), se evita la recursión para evitar bucles infinitos, y la función devuelve False.
--- En caso contrario, se realiza una llamada recursiva a la función existeSecuenciaDeAmigosAux para cada amigo del primer usuario. 
--- Se agrega el primer usuario actual a la lista de visitados. Si alguna de las llamadas recursivas devuelve True, significa que se encontró una secuencia de amigos, y la función devuelve True.
--- Si se recorren todos los amigos del primer usuario sin encontrar una secuencia de amigos, la función devuelve False.
+-- La función 'existeSecuenciaDeAmigosAux' sigue la red de amigos desde el primer usuario hacia el segundo usuario. 
+-- Si llega al segundo usuario, devuelve True. Si se topa con un usuario que ya ha sido visitado antes, para evitar ciclos, se detiene y devuelve False.
 existeSecuenciaDeAmigosAux :: RedSocial -> Usuario -> Usuario -> [Usuario] -> Bool
 existeSecuenciaDeAmigosAux red u1 u2 visitados 
   | u1 == u2 = True
