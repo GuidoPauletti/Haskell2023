@@ -87,15 +87,11 @@ estaRobertoCarlos r = cantidadDeAmigos r (usuarioConMasAmigos r) >= 10
 
 
 -- Ejercicio 6
--- Llama a ´funcionAuxPublicacionesDe´ e ingresa en la función: las publicaciones dentro de la RedSocial y el Usuario de entrada.
+-- Dado un usuario devuelve una lista de sus publicaciones,
+-- se itera sobre las publicaciones de la red, quedandose solo con las publicadas por el usuario
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe r u = funcionAuxPublicacionesDe (publicaciones r) u 
 
---Tomo la primer publicacion de la lista.
---Comparo el usuario de la primer publicacion con el Usuario dado.
---Si son iguales, entonces lo quiero en el resultado(lista) y si no, no lo incluyo en la misma y paso a la siguiente publicacion.
---Con la primera publicacion que suceda esto, sera la cabeza de la lista. Luego, tiene que proseguir con la siguiente publicacion y asi sucesivamente. Para armar la lista, utilizo la recursion.        
---Va a recorrer por todas las publicaciones de la lista uno por uno hasta vaciarla; cuando sucede esto, termina la recursion y devuelve la lista con aquellas publicaciones que realizo el usuario.
 funcionAuxPublicacionesDe :: [Publicacion] -> Usuario -> [Publicacion]
 funcionAuxPublicacionesDe [] u = []
 funcionAuxPublicacionesDe (x:xs) u | usuarioDePublicacion x == u = x : funcionAuxPublicacionesDe xs u
@@ -103,20 +99,15 @@ funcionAuxPublicacionesDe (x:xs) u | usuarioDePublicacion x == u = x : funcionAu
 
 
 -- Ejercicio 7
+--Dado un usuario, se devuelve una lista de las publicaciones que les dio like
+--se itera sobre las publicaciones de la red, solo tomando aquellas que tienen un like del usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
 publicacionesQueLeGustanA r u = publicacionesQueLeGustanAux (publicaciones r) u
--- Llama a ´publicacionesQueLeGustan´ e ingresa en la función: las publicaciones dentro de la RedSocial y el Usuario de entrada
 
---Tomo la primer publicacion de la lista.
---Corroboro que el Usuario dado pertenezca a la lista de likes de esa publicacion.
---Si se cumple esta condicion entonces lo quiero en el resultado(lista) y sera la cabeza de la misma; de lo contrario, no lo incluyo y paso a la siguiente publicacion.
---Con la primera publicacion que suceda esto, sera la cabeza de la lista. Luego, tiene que proseguir con la siguiente publicacion y volver a realizar el paso anterior. Para armar la lista, utilizo la recursion.
---Va a recorrer por todas las publicaciones de la lista uno por uno hasta vaciarla; cuando sucede esto, termina la recursion y devuelve la lista con aquellas publicaciones que el usuario le haya dado like.
 publicacionesQueLeGustanAux :: [Publicacion] -> Usuario -> [Publicacion]
 publicacionesQueLeGustanAux [] u = []
 publicacionesQueLeGustanAux (x:xs) u | pertenece u (likesDePublicacion x) = x : publicacionesQueLeGustanAux xs u
                                      | otherwise = publicacionesQueLeGustanAux xs u
-
 
 
 -- Ejercicio 8
