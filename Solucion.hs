@@ -61,7 +61,7 @@ amigosDe red usuario = amigosDeAux (relaciones red)
       | otherwise = amigosDeAux rs 
 
 -- Ejercicio 3
--- Calcular la cantidad de amigos de un usuario = longitud de su lista de amigos
+-- Calcula la cantidad de amigos de un usuario, es decir, longitud de su lista de amigos
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red usuario = longitud (amigosDe red usuario)
 
@@ -81,7 +81,7 @@ usuarioConMasAmigosAux red (u:us)
     
     
 -- Ejercicio 5
--- Evalua si existe usuario con 10+ amigos, solo lo comprueba con el usuario de mas amigos
+-- Evalua si existe usuario con 10 o más amigos, solo lo comprueba con el usuario de mas amigos
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos r = cantidadDeAmigos r (usuarioConMasAmigos r) >= 10
 
@@ -116,8 +116,8 @@ lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones r u1 u2 = mismosElementos (publicacionesQueLeGustanA r u1) (publicacionesQueLeGustanA r u2)
 
 
---Ejercicio 9
--- La función tieneUnSeguidorFiel verifica si un usuario tiene al menos un seguidor fiel en la red social.
+-- Ejercicio 9
+-- Verifica si para un usuario, existe otro usuario en la red, el cual aparece en los likes de todas sus publicaciones.
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel red usuario = seguidorFielAux red usuario (usuarios red)
 
@@ -158,7 +158,7 @@ perteneceTodos :: Eq a => [a] -> [a] -> Bool
 perteneceTodos [] _ = True
 perteneceTodos (x:xs) ys = pertenece x ys && perteneceTodos xs ys
 
---devuelve longitud de una lista
+--devuelve la longitud de una lista
 longitud :: [t] -> Int
 longitud [] = 0
 longitud (x:xs) = longitud xs + 1
