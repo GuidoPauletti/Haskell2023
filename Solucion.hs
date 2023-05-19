@@ -130,9 +130,11 @@ seguidorFielAux red usuario (x:xs)
 
 
 -- Ejercicio 10
+-- Verifica si existe una ruta que conecta al usuario 'u1' y al usuario 'u2' a través de amigos en una red social.
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red u1 u2 = existeSecuenciaDeAmigosAux red [u1] u2 []
 
+-- Función auxiliar utilizada para encontrar esta ruta a través de los amigos.
 existeSecuenciaDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> [Usuario] -> Bool
 existeSecuenciaDeAmigosAux _ [] _ _ = False
 existeSecuenciaDeAmigosAux red (amigo : restoAmigos) u2 visitados
@@ -162,8 +164,3 @@ longitud :: [t] -> Int
 longitud [] = 0
 longitud (x:xs) = longitud xs + 1
 
-existe :: (a -> Bool) -> [a] -> Bool
-existe _ [] = False
-existe n (x:xs)
-  | n x = True
-  | otherwise = existe n xs
