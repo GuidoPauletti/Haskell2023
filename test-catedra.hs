@@ -1,7 +1,7 @@
 import Test.HUnit
 import Solucion
 
-main = runTestTT testSuite6
+main = runTestTT tests
 
 tests = test [
     " nombresDeUsuarios 1" ~: (nombresDeUsuarios redA) ~?= ["Juan","Natalia","Pedro","Mariela"],
@@ -69,26 +69,3 @@ usuariosB = [usuario1, usuario2, usuario3, usuario5]
 relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
-
-testSuite6 = test [
-    " publicacionesDe 1" ~: (publicacionesDe redA usuario2) ~?= [publicacion2_1, publicacion2_2],
-    " publicacionesDe usuario con ninguna publicacion" ~: (publicacionesDe redC usuario5) ~?= [],
-    " publicacionesDe usuario con una publicacion" ~: (publicacionesDe redD usuario1) ~?= [publicacion1_3],
-    " publicacionesDe usuario con más de una publicacion" ~: (publicacionesDe redB usuario1) ~?= [publicacion1_3, publicacion1_4, publicacion1_5]
- ]
-
-
---redes para los tests propios
-usuariosC = [usuario1, usuario2, usuario3, usuario4, usuario5]
-relacionesC = [relacion3_4, relacion1_3, relacion2_4]
-publicacionesC = [publicacion1_1, publicacion1_3,publicacion2_2, publicacion3_1]
-redC = (usuariosC, relacionesC, publicacionesC)
-
-publicacionesD = [publicacion1_3, publicacion2_1, publicacion3_2, publicacion3_3]
-redD = (usuariosC, relacionesC, publicacionesD)
-
-publicacionesE = [publicacion1_1, publicacion1_3, publicacion3_1, publicacion4_2]
-redE = (usuariosC, relacionesC, publicacionesE)
-
-publicacionesF = [publicacion1_1, publicacion2_2, publicacion4_3]
-redF = (usuariosA, relacionesA, publicacionesF)

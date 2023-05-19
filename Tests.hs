@@ -17,27 +17,27 @@ run10 = runTestTT testSuite10
 
 -- NombresDeUsuarios
 testSuite1 = test [
-    "Caso 1: Un usuario" ~: nombresDeUsuarios ([(1, "Usuario1")], [], []) ~?= ["Usuario1"],
-    "Caso 2: Varios usuarios, sin repetidos" ~: nombresDeUsuarios ([(1, "Usuario1"), (2, "Usuario2"), (3, "Usuario3")], [], []) ~?= ["Usuario1", "Usuario2", "Usuario3"]
+    "Un usuario" ~: nombresDeUsuarios ([(1, "Usuario1")], [], []) ~?= ["Usuario1"],
+    "Varios usuarios, sin repetidos" ~: nombresDeUsuarios ([(1, "Usuario1"), (2, "Usuario2"), (3, "Usuario3")], [], []) ~?= ["Usuario1", "Usuario2", "Usuario3"]
     ]
 
 -- AmigosDe
 testSuite2 = test [
-    "Caso 1: Usuario con un amigo" ~: amigosDe redB usuario3 ~?= [usuario2],
-    "Caso 2: Usuario sin amigos" ~: amigosDe redB usuario4 ~?= [],
-    "Caso 3: Usuario con múltiples amigos, algunos repetidos" ~: amigosDe redA usuario4 ~?= [usuario1, usuario2, usuario3]
+    "Usuario con un amigo" ~: amigosDe redB usuario3 ~?= [usuario2],
+    "Usuario sin amigos" ~: amigosDe redB usuario4 ~?= [],
+    "Usuario con múltiples amigos, algunos repetidos" ~: amigosDe redA usuario4 ~?= [usuario1, usuario2, usuario3]
     ]
 
 -- cantidadDEaAmigos
 testSuite3 = test [
-    " Caso 1: Usuario con 3 amigos" ~: (cantidadDeAmigos redA usuario4) ~?= 3,
-    " Caso 2: Usuario sin amigos" ~: (cantidadDeAmigos redA usuario5) ~?= 0,
-    " Caso 2: Usuario con mas amigos" ~: (cantidadDeAmigos redC usuario12) ~?= 11
+    "Usuario con 3 amigos" ~: (cantidadDeAmigos redA usuario4) ~?= 3,
+    "Usuario sin amigos" ~: (cantidadDeAmigos redA usuario5) ~?= 0,
+    "Usuario con mas amigos" ~: (cantidadDeAmigos redC usuario12) ~?= 11
     ]
 
 -- cantidadDEaAmigos
 testSuite4 = test [
-    " Caso 1: Usuario con mas Amigos" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4, usuario11]
+    "Usuario con mas Amigos" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4, usuario11]
     ]
 
 --estaRobertoCarlos
@@ -64,7 +64,6 @@ testSuite7 = test [
 
 -- lesGustanLasMismasPublicaciones    
 testSuite8 = test [
-    " lesGustanLasMismasPublicaciones 2" ~: (lesGustanLasMismasPublicaciones redB usuario1 usuario3) ~?= True,
     " lesGustanLasMismasPublicaciones ambos usuarios likean exactamente las mismas publicaciones" ~: (lesGustanLasMismasPublicaciones redH usuario8 usuario9) ~?= True,
     " lesGustanLasMismasPublicaciones ambos usuarios likeen publicaciones distintas pero con alguna en comun" ~: (lesGustanLasMismasPublicaciones redH usuario9 usuario10 ) ~?= False,
     " lesGustanLasMismasPublicaciones ambos usuarios likeen publicaciones distintas sin tener ninguna en comun" ~: (lesGustanLasMismasPublicaciones redH usuario7 usuario10) ~?= False
@@ -72,7 +71,6 @@ testSuite8 = test [
 
 -- tieneUnSeguidorFiel    
 testSuite9 = test [
-    " tieneUnSeguidorFiel 1" ~: (tieneUnSeguidorFiel redA usuario1) ~?= True,
     " tieneUnSeguidorFiel el usuario tiene un solo seguidor fiel" ~: (tieneUnSeguidorFiel redI usuario9) ~?= True,
     " tieneUnSeguidorFiel el usuario tiene más de un seguidor fiel" ~: (tieneUnSeguidorFiel redJ usuario7) ~?= True,
     " tieneUnSeguidorFiel el usuario no tiene ningun seguidor fiel" ~: (tieneUnSeguidorFiel redK usuario8) ~?= False
