@@ -144,8 +144,7 @@ existeSecuenciaDeAmigosAux red u1 u2 visitados
 
 --verifica que dos listas tengan los mismos elementos
 mismosElementos :: Eq a => [a] -> [a] -> Bool
-mismosElementos a b | perteneceTodos a b = perteneceTodos b a
-                    | otherwise = False
+mismosElementos a b = perteneceTodos a b && perteneceTodos b a
 
 --verifica que el elemento pertenezca a la lista
 pertenece :: Eq a => a -> [a] -> Bool
