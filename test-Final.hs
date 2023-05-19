@@ -17,15 +17,15 @@ run10 = runTestTT testSuite10
 
 -- NombresDeUsuarios
 testSuite1 = test [
-    "Caso 1: RedSocial vacía" ~: nombresDeUsuarios ([], [], []) ~?= [],
-    "Caso 2: Un usuario" ~: nombresDeUsuarios ([(1, "Usuario1")], [], []) ~?= ["Usuario1"],
-    "Caso 3: Varios usuarios, sin repetidos" ~: nombresDeUsuarios ([(1, "Usuario1"), (2, "Usuario2"), (3, "Usuario3")], [], []) ~?= ["Usuario1", "Usuario2", "Usuario3"]
+    "Caso 1: Un usuario" ~: nombresDeUsuarios ([(1, "Usuario1")], [], []) ~?= ["Usuario1"],
+    "Caso 2: Varios usuarios, sin repetidos" ~: nombresDeUsuarios ([(1, "Usuario1"), (2, "Usuario2"), (3, "Usuario3")], [], []) ~?= ["Usuario1", "Usuario2", "Usuario3"]
     ]
 
 -- AmigosDe
 testSuite2 = test [
     "Caso 1: Usuario con un amigo" ~: amigosDe redB usuario3 ~?= [usuario2],
-    "Caso 2: Usuario sin amigos" ~: amigosDe redB usuario4 ~?= []
+    "Caso 2: Usuario sin amigos" ~: amigosDe redB usuario4 ~?= [],
+    "Caso 3: Usuario con múltiples amigos, algunos repetidos" ~: amigosDe redA usuario4 ~?= [usuario1, usuario2, usuario3]
     ]
 
 -- cantidadDEaAmigos
