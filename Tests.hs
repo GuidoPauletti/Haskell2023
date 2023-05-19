@@ -78,9 +78,9 @@ testSuite9 = test [
 
 -- existeSecuenciaDeAmigos   
 testSuite10 = test [
-    " Existe secuencia de amigos entre usuario1 y usuario3 " ~: (existeSecuenciaDeAmigos redA usuario1 usuario3) ~?= True,
     " Existe secuencia de amigos entre usuario1 y usuario5 " ~: (existeSecuenciaDeAmigos redA usuario1 usuario5) ~?= False,
-    " Existe secuencia de amigos entre usuario4 y usuario3 " ~: (existeSecuenciaDeAmigos redA usuario4 usuario5) ~?= False
+    " Existe secuencia de amigos entre usuario4 y usuario3 " ~: (existeSecuenciaDeAmigos redA usuario4 usuario5) ~?= False,
+    "cadena de 4 amigos" ~: (existeSecuenciaDeAmigos red10 usuarioP usuarioU) ~?= True
     ]
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
 
@@ -99,6 +99,14 @@ usuario9 = (9, "Carlos")
 usuario10 = (10, "Bryan")
 usuario11 = (11, "Vivian")
 usuario12 = (12, "Pikachu")
+usuarioP = (1, "Abraham")
+usuarioQ = (2, "Bruno")
+usuarioR = (3, "Camila")
+usuarioS = (4, "Damian")
+usuarioT = (5, "Emilia")
+usuarioU = (6, "Fernando")
+usuarioV = (7, "Gabriel")
+usuarioW = (8, "Hector")
 
 
 relacion1_2 = (usuario1, usuario2)
@@ -125,6 +133,10 @@ relacion8_9 = (usuario8, usuario9)
 relacion8_12 = (usuario8, usuario12)
 relacion9_10 = (usuario9, usuario10)
 relacion9_12 = (usuario9, usuario12)
+relacionP_W = (usuarioP, usuarioW)
+relacionQ_V = (usuarioQ, usuarioV)
+relacionW_S = (usuarioW, usuarioS)
+relacionS_U = (usuarioS, usuarioU)
 
 publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4])
 publicacion1_2 = (usuario1, "Este es mi segundo post", [usuario4])
@@ -203,3 +215,7 @@ redJ = (usuariosH, relacionesI, publicacionesJ)
 publicacionesK = [publicacion8_1, publicacion8_2, publicacion6_1]
 redK = (usuariosH, relacionesI, publicacionesK)
 
+usuarios10 = [usuarioP, usuarioQ, usuarioR, usuarioS, usuarioT, usuarioU, usuarioV, usuarioW]
+relaciones10 = [relacionP_W, relacionQ_V, relacionW_S, relacionS_U]
+publicaciones10 = []
+red10 = (usuarios10, relaciones10, publicaciones10)
