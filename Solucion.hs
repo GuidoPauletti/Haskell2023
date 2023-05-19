@@ -5,7 +5,7 @@ module Solucion where
 -- Integrante 1: Weicong Wu, eric5vcwwc@gmail.com, 460/23
 -- Integrante 2: Maria Fernanda Guzmán, mfguz22@gmail.com, 756/21
 -- Integrante 3: Guido Pauletti, guido13pauletti@gmail.com, 862/22
--- Integrante 4: Nombre Apellido, email, LU
+-- Integrante 4: Bruno Puodziunas, puodziunasb@gmail.com, 309/23
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
