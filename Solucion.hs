@@ -130,19 +130,15 @@ seguidorFielAux red usuario (x:xs)
 
 
 -- Ejercicio 10
--- Esta función verifica si existe una secuencia de amigos entre dos usuarios en la red social. 
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos red u1 u2 = pertenece u2 (networkUsuario (relaciones red) u1)
+existeSecuenciaDeAmigos red u1 u2 = existeSecuenciaDeAmigosAux red [u1] u2 []
 
-networkUsuario :: [Relacion] -> Usuario -> [Usuario]
-networkUsuario relaciones usuario = networkUsuarioRec relaciones usuario [usuario]
-  where
-    networkUsuarioRec :: [Relacion] -> Usuario -> [Usuario] -> [Usuario]
-    networkUsuarioRec [] _ alcanzables = alcanzables
-    networkUsuarioRec ((u1, u2):rs) usuario alcanzables
-      | u1 == usuario && not (pertenece u2 alcanzables) = networkUsuarioRec rs u2 (u2:alcanzables)
-      | u2 == usuario && not (pertenece u1 alcanzables) = networkUsuarioRec rs u1 (u1:alcanzables)
-      | otherwise = networkUsuarioRec rs usuario alcanzables
+existeSecuenciaDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> [Usuario] -> Bool
+existeSecuenciaDeAmigosAux _ [] _ _ = False
+existeSecuenciaDeAmigosAux red (amigo : restoAmigos) u2 visitados
+  | amigo == u2 = True
+  | pertenece amigo visitados = existeSecuenciaDeAmigosAux red restoAmigos u2 visitados
+  | otherwise = existeSecuenciaDeAmigosAux red ((amigosDe red amigo) ++ restoAmigos) u2 (amigo : visitados)
 
 
 --verifica que dos listas tengan los mismos elementos
