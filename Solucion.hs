@@ -3,8 +3,8 @@ module Solucion where
 -- Completar con los datos del grupo
 -- Nombre de Grupo: sintaxError
 -- Integrante 1: Weicong Wu, eric5vcwwc@gmail.com, 460/23
--- Integrante 2: Nombre Apellido, email, LU
--- Integrante 3: Nombre Apellido, email, LU
+-- Integrante 2: Maria Fernanda Guzmán, mfguz22@gmail.com, 756/21
+-- Integrante 3: Guido Pauletti, guido13pauletti@gmail.com, 862/22
 -- Integrante 4: Nombre Apellido, email, LU
 
 type Usuario = (Integer, String) -- (id, nombre)
@@ -49,8 +49,8 @@ listaDeNombres (a:as) = nombreDeUsuario a : listaDeNombres as
 
 
 -- Ejercicio 2
--- Usa una funcion auxiliar amigosDeAux para iterar sobre las relaciones de la red,
--- si usuario se encuentra en la relacion, se agrega al usuario con el cual está relacionado a una lista 'amigos'
+-- Dado un usuario devuelve una lista con sus amigos, 
+-- esto se obtiene iterando sobre las relaciones de la red, buscando aquellas donde este el usuario
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe red usuario = amigosDeAux (relaciones red)
   where
@@ -61,7 +61,7 @@ amigosDe red usuario = amigosDeAux (relaciones red)
       | otherwise = amigosDeAux rs 
 
 -- Ejercicio 3
--- Calcular la cantidad de amigos de un usuario
+-- Calcular la cantidad de amigos de un usuario = longitud de su lista de amigos
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red usuario = longitud (amigosDe red usuario)
 
@@ -122,7 +122,7 @@ publicacionesQueLeGustanAux (x:xs) u | pertenece u (likesDePublicacion x) = x : 
 -- Ejercicio 8
 -- Corrobora que las publicaciones que le gustan al usuario1 sean iguales al usuario2, de ser asi devuelve True; en caso contrario, False.
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
-lesGustanLasMismasPublicaciones r u1 u2 = publicacionesQueLeGustanA r u1 == publicacionesQueLeGustanA r u2 
+lesGustanLasMismasPublicaciones r u1 u2 = mismosElementos (publicacionesQueLeGustanA r u1) (publicacionesQueLeGustanA r u2)
 
 
 --Ejercicio 9
@@ -134,7 +134,7 @@ tieneUnSeguidorFiel red usuario = seguidorFielAux red usuario (usuarios red)
 seguidorFielAux :: RedSocial -> Usuario -> [Usuario] -> Bool
 seguidorFielAux _ _ [] = False
 seguidorFielAux red usuario (x:xs)
-  | usuario /= x && todosElementosEn (publicacionesDe red usuario) (publicacionesQueLeGustanA red x) = True
+  | usuario /= x && perteneceTodos (publicacionesDe red usuario) (publicacionesQueLeGustanA red x) = True
   | otherwise = seguidorFielAux red usuario xs
 
 
@@ -151,124 +151,27 @@ existeSecuenciaDeAmigosAux red u1 u2 visitados
   | pertenece u1 visitados = False
   | otherwise = existe (\amigo -> existeSecuenciaDeAmigosAux red amigo u2 (u1:visitados)) (amigosDe red u1)
 
-
+--verifica que dos listas tengan los mismos elementos
 mismosElementos :: Eq a => [a] -> [a] -> Bool
 mismosElementos a b | perteneceTodos a b = perteneceTodos b a
                     | otherwise = False
 
+--verifica que el elemento pertenezca a la lista
 pertenece :: Eq a => a -> [a] -> Bool
 pertenece _ [] = False
 pertenece x (y:ys)
   | x == y    = True
   | otherwise = pertenece x ys
 
+--verifica que todos los elementos de la primera lista pertenezcan a la segunda
 perteneceTodos :: Eq a => [a] -> [a] -> Bool
 perteneceTodos [] _ = True
 perteneceTodos (x:xs) ys = pertenece x ys && perteneceTodos xs ys
 
+--devuelve longitud de una lista
 longitud :: [t] -> Int
 longitud [] = 0
 longitud (x:xs) = longitud xs + 1
-
-longitudElementosAux :: (Eq t) => [t] -> [t] -> Bool
-longitudElementosAux x1 x2 | longitud x1 == longitud x2 = True
-                           | otherwise = False 
-
-perteneceElementosAux :: (Eq t) => [t] -> [t] -> Bool
-perteneceElementosAux [] l = True
-perteneceElementosAux (x:xs) l = pertenece x l && perteneceElementosAux xs l 
-
----
-
-usuarioValido :: Usuario -> Bool
-usuarioValido u | idDeUsuario u > 0 && longitud (nombreDeUsuario u) > 0 = True  
-                | otherwise = False 
-
-noHayIdsRepetidos :: [Usuario] -> Bool
-noHayIdsRepetidos [] = True
-noHayIdsRepetidos (x:xs) | noIdRepetidoAux2 x xs = noHayIdsRepetidos xs
-                         | otherwise = False 
-
-noIdRepetidoAux2 :: Usuario -> [Usuario] -> Bool
-noIdRepetidoAux2 u [] = True
-noIdRepetidoAux2 u (x:xs) | noIdRepetidoAux1 u x = noIdRepetidoAux2 u xs
-                          | otherwise = False 
-                                                   
-
-noIdRepetidoAux1 :: Usuario -> Usuario -> Bool
-noIdRepetidoAux1 (u1,u2) (v1,v2) | u1 == v1 = False 
-                                 | otherwise = True 
-
-usuariosValidos :: [Usuario] -> Bool
-usuariosValidos [] = True
-usuariosValidos (x:xs) | usuarioValido x && noHayIdsRepetidos (x:xs) = usuariosValidos xs
-                       | otherwise = False 
-
----
-
-noHayRelacionesRepetidas :: [Relacion] -> Bool
-noHayRelacionesRepetidas [] = True
-noHayRelacionesRepetidas (x:xs) | noRelacionRepAux2 x xs = noHayRelacionesRepetidas xs
-                                | otherwise = False  
-
-noRelacionRepAux2 :: Relacion -> [Relacion] -> Bool
-noRelacionRepAux2 r1 [] = True
-noRelacionRepAux2 r1 (x:xs) | noRelacionRepAux1 r1 x = noRelacionRepAux2 r1 xs
-                            | otherwise = False
-
-noRelacionRepAux1 :: Relacion -> Relacion -> Bool
-noRelacionRepAux1 ((a,b),(c,d)) ((e,f),(g,h)) | a /= e && c /= g = True
-                                          | a /= e && c == g = funcionAux d h 
-                                          | a == e && c /= g = funcionAux b f 
-                                          | a == e && c == g = False 
-
-funcionAux :: String -> String -> Bool
-funcionAux d h | d == h = True
-             | otherwise = False                                          
-
----
-
-usuarioDePublicacionSonUsuariosDeRed :: [Usuario] -> [Publicacion] -> Bool
-usuarioDePublicacionSonUsuariosDeRed [] p1 = True
-usuarioDePublicacionSonUsuariosDeRed (x:xs) p1 | auxiliar2 x p1 && usuarioDePublicacionSonUsuariosDeRed xs p1 = True 
-                                               | otherwise = False 
-
-auxiliar2 :: Usuario -> [Publicacion] -> Bool
-auxiliar2 u1 [] = False 
-auxiliar2 u1 (x:xs) | auxiliar1 u1 x = True 
-                    | otherwise = auxiliar2 u1 xs
-
-auxiliar1 :: Usuario -> Publicacion -> Bool
-auxiliar1 u1 (u2,s,v) = u1 == u2
-                        
-                                                  
-noHayPublicacionesRepetidas :: [Publicacion] -> Bool
-noHayPublicacionesRepetidas [] = True
-noHayPublicacionesRepetidas (x:xs) | noPubliRepAux2 x xs = noHayPublicacionesRepetidas xs
-                                   | otherwise = False
-
-noPubliRepAux2 :: Publicacion -> [Publicacion] -> Bool
-noPubliRepAux2 p1 [] = True
-noPubliRepAux2 p1 (x:xs) | noPubliRepAux1 p1 x = noPubliRepAux2 p1 xs
-                         | otherwise = False
-
-noPubliRepAux1 :: Publicacion -> Publicacion -> Bool
-noPubliRepAux1 ((a,b),s1,u1) ((c,d),s2,u2) | a == c &&  b == d = funcion1 s1 s2 
-                                           | a == c &&  b /= d = False 
-                                           | otherwise = True
-
-funcion1 :: String -> String -> Bool
-funcion1 s1 s2 = s1 /= s2
-
-
-sinRepetidos :: (Eq t) => [t] -> Bool
-sinRepetidos [] = True
-sinRepetidos (x:xs) | not (pertenece x xs) = sinRepetidos xs 
-                    | otherwise = False 
-
-todosElementosEn :: Eq a => [a] -> [a] -> Bool
-todosElementosEn [] _ = True
-todosElementosEn (x:xs) ys = pertenece x ys && todosElementosEn xs ys
 
 existe :: (a -> Bool) -> [a] -> Bool
 existe _ [] = False
